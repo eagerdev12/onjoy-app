@@ -9,6 +9,7 @@ import Swiper from "react-native-swiper";
 import { BaseColor, BaseStyle, Images } from "@config";
 import * as Utils from "@utils";
 import internationalization from "../../config/internationalization";
+import {FBLogin, FBLoginManager} from 'react-native-facebook-login';
 
 class Walkthrough extends Component {
   constructor(props) {
@@ -69,6 +70,37 @@ class Walkthrough extends Component {
     );
   }
 
+  facebookLogin() {
+    // this.setState({loading: true});
+    FBLoginManager.loginWithPermissions(['email'], (error, response) => {
+        if (!error) {
+            console.log(response);
+            // fetch('https://graph.facebook.com/v2.5/me?fields=email,name,first_name,last_name,friends&access_token=' + response.credentials.token)
+            // .then((response) => response.json())
+            // .then((json) => {
+            //     console.log(json);
+            //     let userData = json;
+            //     let params = {
+            //         name : userData.name,
+            //         email : userData.email,
+            //         password: '',
+            //         cnf_password: '',
+            //         provider : 'facebook',
+            //         provider_id : userData.id,
+            //     }
+            //     // this.registerAction(params);
+            // })
+            // .catch((error) => {
+            //     // this.setState({loading: false});
+            //     console.log(error)
+            // })
+        } else {
+            // this.setState({loading: false});
+            console.log(error)
+        }
+    })
+}
+
   render() {
     const { navigation } = this.props;
     return (
@@ -112,7 +144,8 @@ class Walkthrough extends Component {
                 marginTop: 20
               }}
               onPress={() => {
-                this.authentication();
+                this.facebookLogin();
+                // this.authentication();
               }}
             >
               <Text style={{ color: "white", fontFamily: "Cairo-Regular" }}>

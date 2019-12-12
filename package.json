@@ -28,6 +28,7 @@
     "react-native-app-intro-slider": "^3.0.0",
     "react-native-calendars": "^1.212.0",
     "react-native-device-info": "^2.3.2",
+    "react-native-facebook-login": "^1.6.2",
     "react-native-fast-image": "^7.0.2",
     "react-native-floating-action": "^1.19.1",
     "react-native-gesture-handler": "^1.4.1",

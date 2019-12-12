@@ -26,8 +26,8 @@ class Loading extends Component {
       case false:
         setTimeout(() => {
           // navigation.navigate("Main");
-          //   navigation.navigate("Walkthrough");
-          navigation.navigate("Onboarding");
+            navigation.navigate("Walkthrough");
+          // navigation.navigate("Onboarding");
         }, 500);
         break;
       default:

@@ -40,6 +40,8 @@ target 'FelixPro' do
 
   pod 'RCTRestart', :path => '../node_modules/react-native-restart'
 
+  pod 'react-native-facebook-login', :path => '../node_modules/react-native-facebook-login'
+
 end
 
 

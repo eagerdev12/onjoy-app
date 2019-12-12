@@ -90,12 +90,14 @@ android {
 }
 
 dependencies {
+    implementation project(':react-native-facebook-login')
     implementation project(':react-native-restart')
     implementation project(':react-native-localize')
     implementation project(':react-native-linear-gradient')
     implementation project(':react-native-fast-image')
     implementation fileTree(dir: "libs", include: ["*.jar"])
-    implementation "com.facebook.react:react-native:+"  
+    implementation "com.facebook.react:react-native:+"
+    implementation 'com.facebook.android:facebook-android-sdk:[5,6)'
     if (enableHermes) {
       def hermesPath = "../../node_modules/hermesvm/android/";
       debugImplementation files(hermesPath + "hermes-debug.aar")

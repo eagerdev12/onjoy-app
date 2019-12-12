@@ -3743,6 +3743,11 @@ iterall@^1.2.2:
   resolved "https://registry.yarnpkg.com/iterall/-/iterall-1.2.2.tgz#92d70deb8028e0c39ff3164fdbf4d8b088130cd7"
   integrity sha512-yynBb1g+RFUPY64fTrFv7nsjRrENBQJaX2UL+2Szc9REFrSNm1rpSXHGzhmAy7a9uv3vlvgBlXnf9RqmPH1/DA==
 
+itypeof@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/itypeof/-/itypeof-1.1.2.tgz#6fb22639dc78a414f594b3d553a5f2c2488fd022"
+  integrity sha1-b7ImOdx4pBT1lLPVU6XywkiP0CI=
+
 jest-changed-files@^24.9.0:
   version "24.9.0"
   resolved "https://registry.yarnpkg.com/jest-changed-files/-/jest-changed-files-24.9.0.tgz#08d8c15eb79a7fa3fc98269bc14b451ee82f8039"
@@ -5692,6 +5697,13 @@ react-native-device-info@^2.3.2:
   version "2.3.2"
   resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-2.3.2.tgz#db2b8f135aaf2515583e367ab791dcc7d2f0d14c"
   integrity sha512-ccpPuUbwhw5uYdVwN1UJp6ykMZz6U/u82HNM3oJ7O6MP8RIMlMDkHbqR4O0sDtUSuRMGiqqRzFtmOLFYeQ0ODw==
+
+react-native-facebook-login@^1.6.2:
+  version "1.6.2"
+  resolved "https://registry.yarnpkg.com/react-native-facebook-login/-/react-native-facebook-login-1.6.2.tgz#a2454b98e6384caaa4fbf062b181f6139ee7da58"
+  integrity sha512-XDB50QJXZF8rDJZ41wZiQvCaPSTWSjbeSsI5ymJa4T8VjsYf6MTUSSNo5j8qarQCGZcwPGBHYaWQ0Lw+IS9TwQ==
+  dependencies:
+    itypeof "^1.1.2"
 
 react-native-fast-image@^7.0.2:
   version "7.0.2"
