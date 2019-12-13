@@ -42,6 +42,8 @@ target 'FelixPro' do
 
   pod 'react-native-facebook-login', :path => '../node_modules/react-native-facebook-login'
 
+  pod 'RNGoogleSignin', :path => '../node_modules/@react-native-community/google-signin'
+
 end
 
 

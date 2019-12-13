@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "850103921792",
+    "firebase_url": "https://onjoy2019-c5ea5.firebaseio.com",
+    "project_id": "onjoy2019-c5ea5",
+    "storage_bucket": "onjoy2019-c5ea5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:850103921792:android:775654713b66e942424a65",
+        "android_client_info": {
+          "package_name": "com.felixpro"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "850103921792-6h3o6go10g2jam3at771drrr97i0avs7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.felixpro",
+            "certificate_hash": "2777098806f1bddb834ec64351d4f07d5eb59049"
+          }
+        },
+        {
+          "client_id": "850103921792-t8ghp29ubspm32ijtv846u950fc8uup4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBqsqFgWuFR-Y5cANYktklpbqHaNG61FFU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "850103921792-t8ghp29ubspm32ijtv846u950fc8uup4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

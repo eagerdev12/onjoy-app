@@ -10,6 +10,7 @@ import { BaseColor, BaseStyle, Images } from "@config";
 import * as Utils from "@utils";
 import internationalization from "../../config/internationalization";
 import {FBLogin, FBLoginManager} from 'react-native-facebook-login';
+import { GoogleSignin } from '@react-native-community/google-signin';
 
 class Walkthrough extends Component {
   constructor(props) {
@@ -26,6 +27,28 @@ class Walkthrough extends Component {
       ]
     };
   }
+
+  async componentDidMount() {
+    // GoogleSignin.configure({
+    //     webClientId: '850103921792-t8ghp29ubspm32ijtv846u950fc8uup4.apps.googleusercontent.com',
+    //     offlineAccess: false,
+    //     forceConsentPrompt: true, 
+    // });
+
+    // let coords = await this.api.getCoordinates();
+    // if (coords) {
+    //     this.state.latitude = coords.latitude;
+    //     this.state.longitude = coords.longitude;
+
+    //     let data = await this.api.getAddresses(coords);
+        
+    //     this.state.address = data.address;
+    //     this.state.city = data.city;
+    //     this.state.country = data.country;
+    //     this.state.state = data.state;
+    //     this.state.zip = data.zip;
+    // } 
+  };
 
   toggleLanguageonChange(select) {
     if (internationalization.getCurrentLocale() == "en") {
@@ -75,6 +98,7 @@ class Walkthrough extends Component {
     FBLoginManager.loginWithPermissions(['email'], (error, response) => {
         if (!error) {
             console.log(response);
+            this.authentication();
             // fetch('https://graph.facebook.com/v2.5/me?fields=email,name,first_name,last_name,friends&access_token=' + response.credentials.token)
             // .then((response) => response.json())
             // .then((json) => {
@@ -99,7 +123,31 @@ class Walkthrough extends Component {
             console.log(error)
         }
     })
-}
+  }
+
+  googleLogin() {
+    GoogleSignin.configure({
+      webClientId: '850103921792-t8ghp29ubspm32ijtv846u950fc8uup4.apps.googleusercontent.com',
+      offlineAccess: false,
+      forceConsentPrompt: true, 
+    });
+    GoogleSignin.signIn().then((response) => {
+        console.log(response);
+        this.authentication();
+        // let params = {
+        //     name: response.user.name,
+        //     email: response.user.email,
+        //     password: '',
+        //     cnf_password: '',
+        //     provider: 'google',
+        //     provider_id: response.user.id,
+        // }
+        // this.registerAction(params);
+    }, err=>{
+        console.log(err);
+        this.setState({loading: false});
+    });
+  }
 
   render() {
     const { navigation } = this.props;
@@ -137,6 +185,21 @@ class Walkthrough extends Component {
             </Swiper>
           </View>
           <View style={{ width: "100%" }}>
+            <Button
+              full
+              style={{
+                backgroundColor: BaseColor.navyBlue,
+                marginTop: 20
+              }}
+              onPress={() => {
+                this.googleLogin();
+                // this.authentication();
+              }}
+            >
+              <Text style={{ color: "white", fontFamily: "Cairo-Regular" }}>
+                {internationalization.translate("LoginGoogle")}
+              </Text>
+            </Button>
             <Button
               full
               style={{
