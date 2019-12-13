@@ -12,6 +12,30 @@ import internationalization from "../../config/internationalization";
 import {FBLogin, FBLoginManager} from 'react-native-facebook-login';
 import { GoogleSignin } from '@react-native-community/google-signin';
 
+import gql from 'graphql-tag';
+
+import { ApolloClient } from "apollo-client";
+import { createHttpLink } from "apollo-link-http";
+import { setContext } from "apollo-link-context";
+import { InMemoryCache } from "apollo-cache-inmemory";
+
+const httpLink = createHttpLink({
+  uri: "https://sleepy-cove-54859.herokuapp.com/graphql"
+});
+
+const authLink = setContext((_, { headers }) => {
+  return {
+    headers: {
+      ...headers,
+    }
+  };
+});
+
+const client = new ApolloClient({
+  link: authLink.concat(httpLink),
+  cache: new InMemoryCache()
+});
+
 class Walkthrough extends Component {
   constructor(props) {
     super(props);
@@ -34,20 +58,6 @@ class Walkthrough extends Component {
     //     offlineAccess: false,
     //     forceConsentPrompt: true, 
     // });
-
-    // let coords = await this.api.getCoordinates();
-    // if (coords) {
-    //     this.state.latitude = coords.latitude;
-    //     this.state.longitude = coords.longitude;
-
-    //     let data = await this.api.getAddresses(coords);
-        
-    //     this.state.address = data.address;
-    //     this.state.city = data.city;
-    //     this.state.country = data.country;
-    //     this.state.state = data.state;
-    //     this.state.zip = data.zip;
-    // } 
   };
 
   toggleLanguageonChange(select) {
@@ -94,32 +104,29 @@ class Walkthrough extends Component {
   }
 
   facebookLogin() {
-    // this.setState({loading: true});
+    this.setState({loading: true});
     FBLoginManager.loginWithPermissions(['email'], (error, response) => {
         if (!error) {
             console.log(response);
-            this.authentication();
-            // fetch('https://graph.facebook.com/v2.5/me?fields=email,name,first_name,last_name,friends&access_token=' + response.credentials.token)
-            // .then((response) => response.json())
-            // .then((json) => {
-            //     console.log(json);
-            //     let userData = json;
-            //     let params = {
-            //         name : userData.name,
-            //         email : userData.email,
-            //         password: '',
-            //         cnf_password: '',
-            //         provider : 'facebook',
-            //         provider_id : userData.id,
-            //     }
-            //     // this.registerAction(params);
-            // })
-            // .catch((error) => {
-            //     // this.setState({loading: false});
-            //     console.log(error)
-            // })
+            const { token, userId } = response.credentials;
+
+            client.mutate({
+              mutation: gql`
+                mutation ($FBToken: String!, $FBID: String!) {
+                  FBLogin(FBToken: $FBToken, FBID: $FBID) {
+                    id
+                    token
+                    username
+                    firstTime
+                  }
+                }
+              `,
+              variables: {
+                FBToken: token,
+                FBID: userId
+              }
+            }).then(res => console.log(res), err=> this.authentication());
         } else {
-            // this.setState({loading: false});
             console.log(error)
         }
     })
@@ -133,19 +140,28 @@ class Walkthrough extends Component {
     });
     GoogleSignin.signIn().then((response) => {
         console.log(response);
-        this.authentication();
-        // let params = {
-        //     name: response.user.name,
-        //     email: response.user.email,
-        //     password: '',
-        //     cnf_password: '',
-        //     provider: 'google',
-        //     provider_id: response.user.id,
-        // }
-        // this.registerAction(params);
+        // this.authentication();
+        const { idToken } = response;
+        const { id } = response.user;
+
+        client.mutate({
+          mutation: gql`
+            mutation ($GGToken: String!, $GGID: String!) {
+              GGLogin(GGToken: $GGToken, GGID: $GGID) {
+                id
+                token
+                username
+                firstTime
+              }
+            }
+          `,
+          variables: {
+            GGToken: idToken,
+            GGID: id
+          }
+        }).then(res => console.log(res), err=> this.authentication());
     }, err=>{
         console.log(err);
-        this.setState({loading: false});
     });
   }
 
@@ -185,36 +201,42 @@ class Walkthrough extends Component {
             </Swiper>
           </View>
           <View style={{ width: "100%" }}>
-            <Button
-              full
-              style={{
-                backgroundColor: BaseColor.navyBlue,
-                marginTop: 20
-              }}
-              onPress={() => {
-                this.googleLogin();
-                // this.authentication();
-              }}
-            >
-              <Text style={{ color: "white", fontFamily: "Cairo-Regular" }}>
-                {internationalization.translate("LoginGoogle")}
-              </Text>
-            </Button>
-            <Button
-              full
-              style={{
-                backgroundColor: BaseColor.navyBlue,
-                marginTop: 20
-              }}
-              onPress={() => {
-                this.facebookLogin();
-                // this.authentication();
-              }}
-            >
-              <Text style={{ color: "white", fontFamily: "Cairo-Regular" }}>
-                {internationalization.translate("LoginFacebook")}
-              </Text>
-            </Button>
+            {/* google login mutation */}
+            {/* <Mutation mutation={googleLoginMutation}> */}
+              <Button
+                full
+                style={{
+                  backgroundColor: BaseColor.navyBlue,
+                  marginTop: 20
+                }}
+                onPress={() => {
+                  this.googleLogin();
+                  // this.authentication();
+                }}
+              >
+                <Text style={{ color: "white", fontFamily: "Cairo-Regular" }}>
+                  {internationalization.translate("LoginGoogle")}
+                </Text>
+              </Button>
+            {/* </Mutation> */}
+            {/* facebook login */}
+            {/* <Mutation mutation={facebookLoginMutation}> */}
+              <Button
+                full
+                style={{
+                  backgroundColor: BaseColor.navyBlue,
+                  marginTop: 20
+                }}
+                onPress={() => {
+                  this.facebookLogin();
+                  // this.authentication();
+                }}
+              >
+                <Text style={{ color: "white", fontFamily: "Cairo-Regular" }}>
+                  {internationalization.translate("LoginFacebook")}
+                </Text>
+              </Button>
+            {/* </Mutation> */}
             <Button
               full
               style={{ marginTop: 20 }}
