@@ -7,6 +7,8 @@ const onLogin = data => {
   };
 };
 
+
+
 const onChangeLanguage = (lang = "en") => {
   // console.log('in-onChangeLanguage', lang)
   return {
@@ -14,6 +16,8 @@ const onChangeLanguage = (lang = "en") => {
     lang
   };
 };
+
+
 
 export const authentication = (login, callback) => dispatch => {
   //call api and dispatch action case
@@ -27,6 +31,8 @@ export const authentication = (login, callback) => dispatch => {
     }
   }, 500);
 };
+
+
 
 export const changeAppLanguage = lang => dispatch => {
   // console.log('in-changeAppLanguage', lang)
